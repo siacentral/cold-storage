@@ -134,7 +134,8 @@ export default {
 
 	.modal-content {
 		height: 100%;
-		overflow: hidden auto;
+		overflow-x: hidden;
+		overflow-y: auto;
 		padding: 15px 15px 0;
 	}
 }
