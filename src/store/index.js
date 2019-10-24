@@ -1,15 +1,22 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from 'vue';
+import Vuex from 'vuex';
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
-export default new Vuex.Store({
-  state: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
-  modules: {
-  }
-})
+const store = new Vuex.Store({
+	state: {
+		loaded: false
+	},
+	mutations: {
+		setLoaded(state, loaded) {
+			state.loaded = loaded;
+		}
+	},
+	actions: {
+		setLoaded(context, loaded) {
+			context.commit('setLoaded', loaded);
+		}
+	}
+});
+
+export default store;
