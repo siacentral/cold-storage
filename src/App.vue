@@ -1,8 +1,5 @@
 <template>
 	<div id="app">
-		<div class="logo">
-			<sia-central />
-		</div>
 		<div class="content">
 			<transition name="fade" mode="out-in" appear>
 				<div class="modal-panel" v-if="step === 0" key="start">
@@ -46,8 +43,12 @@
 				</div>
 			</transition>
 		</div>
+		<div class="logos">
+			<a href="https://siacentral.com" _target="blank" class="logo"><sia-central /></a>
+			<a href="https://sia.tech" _target="blank" class="built-with"><built-with-sia /></a>
+		</div>
 		<div>
-			<p>This project is available on GitHub: <a target="_blank" href="https://github.com/siacentral/cold-storage">Frontend</a> | <a target="_blank" href="https://github.com/siacentral/sia-lite-wasm">Sia WebAssembly</a></p>
+			<p>This demo is available on GitHub: <a target="_blank" href="https://github.com/siacentral/cold-storage">Frontend</a> | <a target="_blank" href="https://github.com/siacentral/sia-lite-wasm">Sia WebAssembly</a></p>
 		</div>
 	</div>
 </template>
@@ -56,10 +57,12 @@
 /* global sia */
 import { mapState } from 'vuex';
 import SiaCentral from '@/assets/siacentral.svg';
+import BuiltWithSia from '@/assets/built-with-sia.svg';
 
 export default {
 	components: {
-		SiaCentral
+		SiaCentral,
+		BuiltWithSia
 	},
 	data() {
 		return {
@@ -73,10 +76,33 @@ export default {
 		...mapState(['loaded'])
 	},
 	methods: {
-		onGenerateSeed() {
+		genSeed() {
+			return new Promise((resolve, reject) => {
+				sia.generateSeed((err, seed) => {
+					if (err)
+						return reject(err);
+
+					resolve(seed);
+				});
+			});
+		},
+		genAddresses(seed, i, n) {
+			return new Promise((resolve, reject) => {
+				sia.generateAddresses(seed, i, n, (err, addresses) => {
+					if (err)
+						return reject(err);
+
+					resolve(addresses);
+				});
+			});
+		},
+		async onGenerateSeed() {
 			try {
-				this.seed = sia.generateSeed();
-				this.addresses = sia.generateAddresses(this.seed, 0, 10);
+				const seed = await this.genSeed(),
+					addresses = await this.genAddresses(seed, 0, 10);
+
+				this.seed = seed;
+				this.addresses = addresses.map(a => a.address);
 			} catch (ex) {
 				console.error(ex.message);
 			} finally {
@@ -97,7 +123,7 @@ export default {
 
 #app {
 	display: grid;
-	grid-template-rows: auto minmax(0, 1fr) auto;
+	grid-template-rows: minmax(0, 1fr) repeat(2, auto);
 	grid-gap: 15px;
 	width: 100%;
 	height: 100%;
