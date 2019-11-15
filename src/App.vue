@@ -43,10 +43,7 @@
 				</div>
 			</transition>
 		</div>
-		<div class="logos">
-			<a href="https://siacentral.com" _target="blank" class="logo"><sia-central /></a>
-			<a href="https://sia.tech" _target="blank" class="built-with"><built-with-sia /></a>
-		</div>
+		<logos />
 		<div>
 			<p>This demo is available on GitHub: <a target="_blank" href="https://github.com/siacentral/cold-storage">Frontend</a> | <a target="_blank" href="https://github.com/siacentral/sia-lite-wasm">Sia WebAssembly</a></p>
 		</div>
@@ -56,13 +53,11 @@
 <script>
 /* global sia */
 import { mapState } from 'vuex';
-import SiaCentral from '@/assets/siacentral.svg';
-import BuiltWithSia from '@/assets/built-with-sia.svg';
+import Logos from '@/components/Logos';
 
 export default {
 	components: {
-		SiaCentral,
-		BuiltWithSia
+		Logos
 	},
 	data() {
 		return {
@@ -163,14 +158,6 @@ export default {
 		overflow-x: hidden;
 		overflow-y: auto;
 		padding: 15px 15px 0;
-	}
-}
-
-.logo {
-	svg {
-		display: block;
-		max-width: 100px;
-		margin: auto;
 	}
 }
 
