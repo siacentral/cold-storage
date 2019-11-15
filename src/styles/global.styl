@@ -11,7 +11,7 @@
 	-webkit-border-radius: 100px;
 
 	&:hover {
-		background-color: darken(bg-dark-accent, 8);	
+		background-color: darken(bg-dark-accent, 8);
 	}
 }
 
@@ -33,7 +33,20 @@ a {
 	text-decoration: none;
 
 	&:hover, &:active, &:focus {
-		text-decoration: underline;	
+		text-decoration: underline;
+	}
+}
+
+.logos {
+	display: flex;
+	align-content: center;
+	justify-content: center;
+
+	a {
+		display: inline-block;
+		margin: auto;
+		width: 120px;
+		padding: 15px;
 	}
 }
 
@@ -147,7 +160,7 @@ html, body {
 
 	&.btn-warning {
 		background: warning-accent;
-		color: rgba(255, 255, 255, 0.84);	
+		color: rgba(255, 255, 255, 0.84);
 	}
 
 	&.btn-danger {
@@ -252,7 +265,7 @@ body.dark {
 
 		&.btn-warning {
 			background: warning-accent;
-			color: rgba(255, 255, 255, 0.84);	
+			color: rgba(255, 255, 255, 0.84);
 		}
 
 		&.btn-danger {
