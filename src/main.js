@@ -6,24 +6,22 @@ import store from '@/store';
 
 Vue.config.productionTip = false;
 
-if (WebAssembly) {
-	// WebAssembly.instantiateStreaming is not currently available in Safari
-	if (WebAssembly && !WebAssembly.instantiateStreaming) { // polyfill
-		WebAssembly.instantiateStreaming = async(resp, importObject) => {
-			const source = await (await resp).arrayBuffer();
-			return WebAssembly.instantiate(source, importObject);
-		};
-	}
+async function loadWASM() {
+	try {
+		if (!WebAssembly || !WebAssembly.instantiateStreaming)
+			throw new Error('WebAssembly is not supported, please update your browser');
 
-	const go = new Go();
+		const go = new Go(),
+			result = await WebAssembly.instantiateStreaming(fetch('sia/sia.wasm'), go.importObject);
 
-	WebAssembly.instantiateStreaming(fetch('sia/sia.wasm'), go.importObject).then((result) => {
 		go.run(result.instance);
-
 		store.dispatch('setLoaded', true);
-	});
-} else
-	console.log('WebAssembly is not supported in your browser');
+	} catch (ex) {
+		store.dispatch('setError', ex.message);
+	}
+}
+
+loadWASM();
 
 new Vue({
 	render: h => h(App),

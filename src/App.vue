@@ -11,7 +11,10 @@
 					<p>This is a proof-of-concept development for Sia in js via WebAssembly. Please use the official cold storage
 						app. <a target="_blank" href="https://gitlab.com/NebulousLabs/sia-coldstorage">gitlab.com/NebulousLabs/sia-coldstorage</a></p>
 					<div class="buttons">
-						<button class="btn btn-inline btn-success" @click="step = 1" :disabled="!loaded">Next</button>
+						<transition name="fade" mode="out-in" appear>
+							<p v-if="error" class="text-error">{{ error }}</p>
+							<button class="btn btn-inline btn-success" v-else @click="step = 1" :disabled="!loaded">Next</button>
+						</transition>
 					</div>
 				</div>
 				<div class="modal-panel" v-else-if="step === 1" key="disconnect">
@@ -68,7 +71,7 @@ export default {
 		};
 	},
 	computed: {
-		...mapState(['loaded'])
+		...mapState(['loaded', 'error'])
 	},
 	methods: {
 		genSeed() {
