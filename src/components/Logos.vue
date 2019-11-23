@@ -25,7 +25,6 @@ export default {
 
 	a {
 		display: inline-block;
-		margin: auto;
 		width: 120px;
 		padding: 15px;
 	}
