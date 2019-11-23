@@ -8,8 +8,8 @@
 						storage of Siacoins. For additional security, once the app has fully loaded
 						you can disconnect from the internet. This will ensure that your seed cannot
 						leave your computer.</p>
-					<p>This is a proof-of-concept development for Sia in js via WebAssembly. Please use the official cold storage
-						app. <a target="_blank" href="https://gitlab.com/NebulousLabs/sia-coldstorage">gitlab.com/NebulousLabs/sia-coldstorage</a></p>
+					<p>This is a proof-of-concept development for interacting with Sia in js through
+						WebAssembly.</p>
 					<div class="buttons">
 						<transition name="fade" mode="out-in" appear>
 							<p v-if="error" class="text-error">{{ error }}</p>
@@ -22,8 +22,8 @@
 					<p>The app has fully loaded you can now disconnect your internet for additional
 						security. This ensures that your seed and addresses cannot leave your
 						computer.</p>
-					<p>This is a proof-of-concept development for Sia in js via WebAssembly. Please use the official cold storage
-						app. <a target="_blank" href="https://gitlab.com/NebulousLabs/sia-coldstorage">gitlab.com/NebulousLabs/sia-coldstorage</a></p>
+					<p>This is a proof-of-concept development for interacting with Sia in js through
+						WebAssembly.</p>
 					<div class="buttons">
 						<button class="btn btn-inline btn-success" @click="onGenerateSeed" :disabled="!loaded || generating">Generate Seed</button>
 					</div>
