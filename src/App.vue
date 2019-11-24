@@ -32,9 +32,7 @@
 					<div class="modal-content">
 						<p>A unique seed and {{ this.addresses.length }} addresses have been generated for you.</p>
 						<h4>Seed</h4>
-						<div class="control">
-							<input type="text" :value="seed" readonly />
-						</div>
+						<p class="seed">{{seed}}</p>
 						<h4>Addresses</h4>
 						<div class="control" v-for="address in addresses" :key="address">
 							<input type="text" :value="address" readonly />
@@ -128,6 +126,13 @@ export default {
 	padding: 15px;
 	align-items: center;
 	justify-items: center;
+}
+
+.seed {
+	font-size: 1.2rem;
+    border: 1px solid dark-gray;
+    padding: 8px;
+    border-radius: 4px;
 }
 
 .content {
