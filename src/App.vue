@@ -12,8 +12,7 @@
 						WebAssembly.</p>
 					<div class="buttons">
 						<transition name="fade" mode="out-in" appear>
-							<p v-if="error" class="text-error">{{ error }}</p>
-							<button class="btn btn-inline btn-success" v-else @click="step = 1" :disabled="!loaded">Next</button>
+							<button class="btn btn-inline btn-success" @click="step = 1" :disabled="!loaded">Next</button>
 						</transition>
 					</div>
 				</div>
@@ -52,9 +51,8 @@
 </template>
 
 <script>
-/* global sia */
-import { mapState } from 'vuex';
 import Logos from '@/components/Logos';
+import { waitForLoad, generateSeed, generateAddresses } from '@/sia.js';
 
 export default {
 	components: {
@@ -65,37 +63,19 @@ export default {
 			generating: false,
 			step: 0,
 			seed: '',
+			loaded: false,
 			addresses: []
 		};
 	},
-	computed: {
-		...mapState(['loaded', 'error'])
+	async mounted() {
+		waitForLoad();
+		this.loaded = true;
 	},
 	methods: {
-		genSeed() {
-			return new Promise((resolve, reject) => {
-				sia.generateSeed((err, seed) => {
-					if (err)
-						return reject(err);
-
-					resolve(seed);
-				});
-			});
-		},
-		genAddresses(seed, i, n) {
-			return new Promise((resolve, reject) => {
-				sia.generateAddresses(seed, i, n, (err, addresses) => {
-					if (err)
-						return reject(err);
-
-					resolve(addresses);
-				});
-			});
-		},
 		async onGenerateSeed() {
 			try {
-				const seed = await this.genSeed(),
-					addresses = await this.genAddresses(seed, 0, 10);
+				const seed = await generateSeed(),
+					addresses = await generateAddresses(seed, 0, 10);
 
 				this.seed = seed;
 				this.addresses = addresses.map(a => a.address);
@@ -104,11 +84,6 @@ export default {
 			} finally {
 				this.step = 2;
 			}
-		}
-	},
-	watch: {
-		loaded() {
-
 		}
 	}
 };
